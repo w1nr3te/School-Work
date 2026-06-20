@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0a0a0f;
+  --surface:  #0f0f1a;
+  --border:   #1a1a2e;
+  --cyan:     #00fff5;
+  --pink:     #ff2d78;
+  --yellow:   #f5c518;
+  --text:     #c8d6e5;
+  --dim:      #4a5568;
+  --num-bg:   #111122;
+  --num-hover:#1a1a33;
+  --op-bg:    #0d1a2e;
+  --op-hover: #152340;
+}
+
+body {
+  background: var(--bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: 'Share Tech Mono', monospace;
+}
+
+.calculator {
+  width: 320px;
+  background: var(--surface);
+  border: 1px solid var(--cyan);
+  border-radius: 4px;
+  padding: 20px;
+  position: relative;
+  box-shadow:
+    0 0 0 1px #000,
+    0 0 20px rgba(0,255,245,0.15),
+    inset 0 0 40px rgba(0,0,0,0.5);
+}
+
+.calculator::before {
+  content: 'CALC//SYS v2.0.77';
+  position: absolute;
+  top: -10px;
+  left: 14px;
+  background: var(--surface);
+  color: var(--cyan);
+  font-size: 10px;
+  letter-spacing: 2px;
+  padding: 0 6px;
+}
+
+.calculator::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--pink), var(--cyan), var(--pink));
+  border-radius: 4px 4px 0 0;
+}
+
+/* Display */
+.display {
+  background: #05050d;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 14px 16px 16px;
+  margin-bottom: 16px;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+  position: relative;
+}
+
+.display::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,255,245,0.015) 2px,
+    rgba(0,255,245,0.015) 4px
+  );
+  pointer-events: none;
+}
+
+.display-label {
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+
+.expression {
+  font-size: 13px;
+  color: var(--dim);
+  text-align: right;
+  min-height: 18px;
+  word-break: break-all;
+  margin-bottom: 4px;
+}
+
+.result {
+  font-family: 'Orbitron', monospace;
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--cyan);
+  text-align: right;
+  word-break: break-all;
+  text-shadow: 0 0 8px rgba(0,255,245,0.4);
+  transition: color 0.1s;
+}
+
+.result.error { color: var(--pink); font-size: 20px; }
+
+/* Buttons grid */
+.buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.btn {
+  height: 62px;
+  background: var(--num-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  font-family: 'Orbitron', monospace;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s, border-color 0.1s, transform 0.08s;
+  position: relative;
+  letter-spacing: 1px;
+}
+
+.btn:hover { background: var(--num-hover); border-color: var(--dim); }
+.btn:active { transform: scale(0.95); }
+
+.btn.wide { grid-column: span 2; }
+
+/* Operator buttons */
+.btn.op {
+  background: var(--op-bg);
+  color: var(--cyan);
+  border-color: rgba(0,255,245,0.25);
+  font-size: 20px;
+}
+.btn.op:hover { background: var(--op-hover); border-color: var(--cyan); }
+.btn.op.active-op {
+  background: rgba(0,255,245,0.12);
+  border-color: var(--cyan);
+  color: #fff;
+}
+
+/* Utility buttons (AC, +/-, %) */
+.btn.util {
+  color: var(--yellow);
+  background: var(--num-bg);
+  border-color: rgba(245,197,24,0.2);
+  font-size: 13px;
+}
+.btn.util:hover { border-color: var(--yellow); }
+
+/* Equals */
+.btn.eq {
+  background: var(--pink);
+  color: #fff;
+  border-color: var(--pink);
+  font-size: 22px;
+  font-weight: 700;
+}
+.btn.eq:hover { background: #ff4d8d; border-color: #ff4d8d; }
+.btn.eq:active { transform: scale(0.95); }
+
+/* Corner accent marks */
+.btn::before, .btn::after { display: none; }
+.btn.eq::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 3px; right: 3px;
+  width: 5px; height: 5px;
+  border-top: 1px solid rgba(255,255,255,0.5);
+  border-right: 1px solid rgba(255,255,255,0.5);
+}
